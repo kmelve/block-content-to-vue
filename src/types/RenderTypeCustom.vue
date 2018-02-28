@@ -1,4 +1,5 @@
 <script>
+import Vue from "vue";
 import Block from "./Block.vue";
 import {
   getSerializers,
@@ -7,26 +8,26 @@ import {
 } from "@sanity/block-content-to-hyperscript/internals";
 
 export default {
-  name: "default-type",
+  name: "RenderTypeCustom",
   props: {
-    block: Object,
+    blocks: Array,
     isCustomType: Boolean,
-    styling: String,
-    markDefs: Array,
     serializers: Object
   },
   render: function(createElement) {
     const renderNode = createElement;
-    console.log(renderNode);
     const { defaultSerializers } = getSerializers(renderNode);
-    console.log("defaultSerializers", defaultSerializers);
-    debugger;
-    return blocksToNodes(
-      renderNode,
-      Object.assign({ blocks: [], props: this.props })
-    );
-  },
-  methods: {
+
+    const SanityBlockContent = props => {
+      console.log("test2", Object.assign({ blocks: [] }, ...props));
+      return blocksToNodes(renderNode, Object.assign({ blocks: [] }, props));
+    };
+
+    SanityBlockContent.defaultSerializers = defaultSerializers;
+
+    return SanityBlockContent(this.$props);
+  }
+  /* methods: {
     renderMark(h) {
       const marks = this.markDefs;
       const renderType = this.isCustomType
@@ -62,6 +63,6 @@ export default {
         }
       });
     }
-  }
+  } */
 };
 </script>

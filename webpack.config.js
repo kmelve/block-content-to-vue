@@ -29,11 +29,11 @@ var config = {
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin( {
-      minimize : true,
-      sourceMap : false,
-      mangle: true,
+      minimize : false,
+      sourceMap : true,
+      mangle: false,
       compress: {
-        warnings: false
+        warnings: true
       }
     } )
   ]
